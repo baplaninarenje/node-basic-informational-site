@@ -1,16 +1,15 @@
+require('dotenv').config();
 const http = require('node:http');
 const fs = require('node:fs/promises');
 
 const server = http.createServer();
 
 server.on('request', (req, res) => {
-  console.log(req.url);
-
   res.writeHead(200, { 'Content-Type': 'text/html' });
   readFileAsync(getFileNameFromReqUrl(req.url)).then((f) => res.end(f));
 });
 
-server.listen(8080);
+server.listen(parseInt(process.env.PORT));
 
 async function readFileAsync(filename) {
   try {
